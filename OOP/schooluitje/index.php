@@ -1,10 +1,10 @@
 <?php
-require_once __DIR__ . '/src/Person.php';
-require_once __DIR__ . '/src/Student.php';
-require_once __DIR__ . '/src/Teacher.php';
-require_once __DIR__ . '/src/Group.php';
-require_once __DIR__ . '/src/Schooltrip.php';
-require_once __DIR__ . '/src/SchooltripList.php';
+require_once __DIR__ . '/Person.php';
+require_once __DIR__ . '/Student.php';
+require_once __DIR__ . '/Teacher.php';
+require_once __DIR__ . '/Group.php';
+require_once __DIR__ . '/Schooltrip.php';
+require_once __DIR__ . '/SchooltripList.php';
 
 use Schooltrip\{Group, Student, Teacher, Schooltrip, SchooltripList};
 
