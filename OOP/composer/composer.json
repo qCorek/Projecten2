@@ -1,0 +1,9 @@
+{
+    "name": "ace/composer",
+    "autoload": {
+        "psr-4": {
+            "Ace\\Composer\\": "src/"
+        }
+    },
+    "require": {}
+}
