@@ -12,14 +12,13 @@
     // functie: Programma CRUD fietsen
     // auteur: Vul hier je naam in   
 
-    // Initialisatie
-    include 'functions.php';
+include 'functions.php';
 
-    // Main
+$crud = new Crud();
+$crud->crudMain();
 
-    // Aanroep functie 
-    crudMain();
-    ?>
+
+?>
 
 </body>
 </html>
