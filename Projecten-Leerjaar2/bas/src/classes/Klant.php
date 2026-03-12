@@ -153,19 +153,25 @@ class Klant extends Database{
 	 * @param mixed $row
 	 * @return mixed
 	 */
-	public function insertKlant($row){
-		
-		// Bepaal een unieke klantId
-		$klantId = $this->BepMaxKlantId();
+public function insertKlant($klantnaam, $klantemail){
 
-		// query
-		
-		
-		// Prepare
-		
-		
-		// Execute 'klantId'=>$klantId,
-				
-	}
+    // Bepaal een unieke klantId
+    $klantId = $this->BepMaxKlantId();
+
+    // Query
+    $sql = "INSERT INTO $this->table_name 
+            (klantId, klantNaam, klantEmail) 
+            VALUES (:klantId, :klantNaam, :klantEmail)";
+
+    // Prepare
+    $stmt = self::$conn->prepare($sql);
+
+    // Execute
+    return $stmt->execute([
+        'klantId' => $klantId,
+        'klantNaam' => $klantnaam,
+        'klantEmail' => $klantemail
+    ]);
+}
 }
 ?>
