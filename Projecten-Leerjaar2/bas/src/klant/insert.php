@@ -1,25 +1,26 @@
 <?php
-// auteur: studentnaam
-// functie: insert class Klant
-
-// Autoloader classes via composer
 require '../../vendor/autoload.php';
 
 use Bas\classes\Klant;
 
 if(isset($_POST["insert"]) && $_POST["insert"] == "Toevoegen"){
 
-    // waarden uit formulier halen
     $klantnaam = $_POST["klantnaam"];
     $klantemail = $_POST["klantemail"];
+    $klantadres = $_POST["klantadres"];
+    $klantpostcode = $_POST["klantpostcode"];
+    $klantwoonplaats = $_POST["klantwoonplaats"];
 
-    // object maken
     $klant = new Klant();
 
-    // klant toevoegen aan database
-    $klant->insertKlant($klantnaam, $klantemail);
+    $klant->insertKlant(
+        $klantnaam,
+        $klantemail,
+        $klantadres,
+        $klantpostcode,
+        $klantwoonplaats
+    );
 
-    // terug naar overzicht
     header("Location: read.php");
     exit;
 }
@@ -40,12 +41,24 @@ if(isset($_POST["insert"]) && $_POST["insert"] == "Toevoegen"){
 
 <form method="post">
 
-<label for="nv">Klantnaam:</label>
-<input type="text" id="nv" name="klantnaam" placeholder="Klantnaam" required/>
+<label>Klantnaam:</label>
+<input type="text" name="klantnaam" required>
 <br>
 
-<label for="an">Klantemail:</label>
-<input type="text" id="an" name="klantemail" placeholder="Klantemail" required/>
+<label>Klantemail:</label>
+<input type="email" name="klantemail" required>
+<br>
+
+<label>Adres:</label>
+<input type="text" name="klantadres" required>
+<br>
+
+<label>Postcode:</label>
+<input type="text" name="klantpostcode">
+<br>
+
+<label>Woonplaats:</label>
+<input type="text" name="klantwoonplaats">
 <br><br>
 
 <input type="submit" name="insert" value="Toevoegen">
