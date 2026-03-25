@@ -1,22 +1,20 @@
 <?php 
-// auteur: studentnaam
-// functie: verwijderen klant
-
 require '../../vendor/autoload.php';
 use Bas\classes\Klant;
 
 if(isset($_POST["verwijderen"])){
 
-    // Maak een object Klant
     $klant = new Klant();
-
-    // Haal klantId uit de URL
     $klantId = $_GET['klantId'];
 
-    // Delete klant
-    $klant->deleteKlant($klantId);
+    $result = $klant->deleteKlant($klantId);
 
-    echo '<script>alert("Klant verwijderd")</script>';
+    if($result){
+        echo '<script>alert("Klant verwijderd")</script>';
+    } else {
+        echo '<script>alert("Klant kon NIET verwijderd worden (heeft orders)")</script>';
+    }
+
     echo "<script> location.replace('read.php'); </script>";
 }
 ?>

@@ -10,15 +10,23 @@ class TableHelper {
      * @param array $row
      * @return string
      */
-    public static function getTableHeader(array $row) : string {
-        // haal de kolommen uit de eerste [0] van het array $result mbv array_keys
-        $headers = array_keys($row);
-        $headerTxt = "<tr>";
-        foreach($headers as $header){
-            $headerTxt .= "<th>" . $header . "</th>";   
-        }
-        $headerTxt .= "</tr>";
-        return $headerTxt;
+  public static function getTableHeader(array $row) : string {
+    $headers = array_keys($row);
+    $headerTxt = "<tr>";
+
+    foreach($headers as $header){
+        if($header == 'klantId') continue;
+        $headerTxt .= "<th>" . $header . "</th>";   
     }
+
+    // extra kolommen voor knoppen
+    $headerTxt .= "<th>Wijzig</th>";
+    $headerTxt .= "<th>Verwijder</th>";
+
+    $headerTxt .= "</tr>";
+    return $headerTxt;
+}
+
+
 }
 ?>

@@ -96,14 +96,21 @@ class Klant extends Database {
     // =========================
     // DELETE (User story 5)
     // =========================
-    public function deleteKlant(int $klantId) : bool {
-        $conn = $this->getConnection();
+public function deleteKlant(int $klantId) : bool {
+    $conn = $this->getConnection();
 
+    try {
         $sql = "DELETE FROM $this->table_name WHERE klantId = :id";
         $stmt = $conn->prepare($sql);
+        $stmt->execute(['id' => $klantId]);
 
-        return $stmt->execute(['id' => $klantId]);
+        // 🔥 check of er echt iets verwijderd is
+        return $stmt->rowCount() > 0;
+
+    } catch (\PDOException $e) {
+        return false;
     }
+}
 
     // =========================
     // TABLE WEERGAVE
@@ -120,7 +127,6 @@ class Klant extends Database {
 
         foreach($lijst as $row){
             $txt .= "<tr>";
-            $txt .= "<td>{$row['klantId']}</td>";
             $txt .= "<td>{$row['klantNaam']}</td>";
             $txt .= "<td>{$row['klantEmail']}</td>";
             $txt .= "<td>{$row['klantAdres']}</td>";

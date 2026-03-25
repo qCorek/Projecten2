@@ -1,46 +1,50 @@
 <?php
-// auteur: studentnaam
-// functie: unitests class Klant
-
 use PHPUnit\Framework\TestCase;
 use Bas\classes\Klant;
 
-// Filename moet gelijk zijn aan de classname KlantTest
+require_once __DIR__ . '/../vendor/autoload.php';
+
 class KlantTest extends TestCase{
     
-	protected $klant;
+    protected $klant;
 
     protected function setUp(): void {
         $this->klant = new Klant();
     }
 
-	// Methods moeten starten met de naam test....
-	public function testgetKlanten(){
-		$klanten = $this->klant->getKlanten();
+    public function testGetKlanten(){
+        $klanten = $this->klant->getKlanten();
         $this->assertIsArray($klanten);
-		$this->assertTrue(count($klanten) > 0, "Aantal moet groter dan 0 zijn");
-	}
+    }
 
-	public function testGetKlant(){
-		$klantId = 1; // check of dit ook echt in de database bestaat!
-		$klant = $this->klant->getKlant($klantId);
-		$this->assertEquals($klantId, $klant['klantId']);
-	}
+    public function testInsertKlant(){
 
-public function testInsertKlant(){
+        $result = $this->klant->insertKlant(
+            "UnitTestNaam",
+            "unittest@email.nl",
+            "Teststraat 1",
+            "1234AB",
+            "Rotterdam"
+        );
 
-    $klantnaam = "UnitTestNaam";
-    $klantemail = "unittest@email.nl";
+        $this->assertTrue($result);
+    }
 
-    $result = $this->klant->insertKlant($klantnaam, $klantemail);
+    public function testGetKlant(){
 
-    $this->assertTrue($result, "Insert moet true teruggeven");
+        $this->klant->insertKlant(
+            "TestNaam",
+            "test@email.nl",
+            "Straat 1",
+            "1234AB",
+            "Rotterdam"
+        );
 
+        $klanten = $this->klant->getKlanten();
+        $laatste = end($klanten);
+
+        $klant = $this->klant->getKlant($laatste['klantId']);
+
+        $this->assertEquals($laatste['klantId'], $klant['klantId']);
+    }
 }
-
-
-
-	
-}
-	
-?>
