@@ -2,27 +2,42 @@
 require '../../vendor/autoload.php';
 
 use Bas\classes\Klant;
+use Bas\classes\Verkooporder;
 
-if(isset($_POST["insert"]) && $_POST["insert"] == "Toevoegen"){
-
-    $klantnaam = $_POST["klantnaam"];
-    $klantemail = $_POST["klantemail"];
-    $klantadres = $_POST["klantadres"];
-    $klantpostcode = $_POST["klantpostcode"];
-    $klantwoonplaats = $_POST["klantwoonplaats"];
+// =========================
+// KLANT TOEVOEGEN
+// =========================
+if(isset($_POST["insert_klant"])){
 
     $klant = new Klant();
 
     $klant->insertKlant(
-        $klantnaam,
-        $klantemail,
-        $klantadres,
-        $klantpostcode,
-        $klantwoonplaats
+        $_POST["klantnaam"],
+        $_POST["klantemail"],
+        $_POST["klantadres"],
+        $_POST["klantpostcode"],
+        $_POST["klantwoonplaats"]
     );
 
-    header("Location: read.php");
-    exit;
+    echo "Klant toegevoegd!";
+}
+
+// =========================
+// VERKOOPORDER TOEVOEGEN
+// =========================
+if(isset($_POST["insert_order"])){
+
+    $order = new Verkooporder();
+
+    $order->insertOrder(
+        $_POST["klantId"],
+        $_POST["artId"],
+        $_POST["datum"],
+        $_POST["aantal"],
+        $_POST["status"]
+    );
+
+    echo "Order toegevoegd!";
 }
 ?>
 

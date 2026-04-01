@@ -1,9 +1,45 @@
+<?php
+// auteur: umit ali akbas
+// functie: Verkooporder class
+require '../../vendor/autoload.php';
+
+use Bas\classes\Klant;
+use Bas\classes\Verkooporder;
+
+$klant = new Klant();
+$order = new Verkooporder();
+
+// =========================
+// VERKOOPORDER TOEVOEGEN
+// =========================
+if(isset($_POST["insert_order"])){
+
+    $order->insertOrder(
+        $_POST["klantId"],
+        $_POST["artId"],
+        $_POST["datum"],
+        $_POST["aantal"],
+        $_POST["status"]
+    );
+
+    echo "<p>Order toegevoegd!</p>";
+}
+
+// =========================
+// KLANT ZOEKEN OF LIJST
+// =========================
+if(isset($_POST['zoeken'])){
+    $result = $klant->zoekKlant($_POST['zoeknaam']);
+} else {
+    $result = $klant->getKlanten();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD Klant</title>
+    <title>CRUD Klant + Verkooporder</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 
@@ -13,10 +49,10 @@
 
 <nav>
     <a href='../index.html'>Home</a><br>
-    <a href='insert.php'>Toevoegen nieuwe klant</a><br><br>
+    <a href='insert.php'>Toevoegen nieuwe klant</a><br>
 </nav>
 
-<!-- 🔍 ZOEKEN -->
+<!-- 🔍 ZOEKEN KLANT -->
 <h2>Zoeken op klantnaam</h2>
 
 <form method="post">
@@ -27,24 +63,41 @@
 <br>
 
 <?php
+$klant->showTable($result);
+?>
 
-require '../../vendor/autoload.php';
-use Bas\classes\Klant;
+<hr>
 
-$klant = new Klant();
+<h1>CRUD Verkooporder</h1>
 
-// =========================
-// ZOEKEN OF LIJST
-// =========================
-if(isset($_POST['zoeken'])){
-    $result = $klant->zoekKlant($_POST['zoeknaam']);
-    $klant->showTable($result);
-} 
-else {
-    $lijst = $klant->getKlanten();
-    $klant->showTable($lijst);
-}
+<h2>Nieuwe Verkooporder</h2>
 
+<form method="post">
+
+<label>KlantID:</label>
+<input type="number" name="klantId" required><br>
+
+<label>ArtikelID:</label>
+<input type="number" name="artId" required><br>
+
+<label>Datum:</label>
+<input type="date" name="datum" required><br>
+
+<label>Aantal:</label>
+<input type="number" name="aantal" required><br>
+
+<label>Status:</label>
+<input type="number" name="status" required><br><br>
+
+<input type="submit" name="insert_order" value="Toevoegen order">
+
+</form>
+
+<br>
+
+<?php
+$orders = $order->getOrders();
+$order->showTable($orders);
 ?>
 
 </body>
