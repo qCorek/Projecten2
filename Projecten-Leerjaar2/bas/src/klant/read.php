@@ -1,6 +1,7 @@
 <?php
 // auteur: umit ali akbas
 // functie: Verkooporder class
+
 require '../../vendor/autoload.php';
 
 use Bas\classes\Klant;
@@ -8,6 +9,8 @@ use Bas\classes\Verkooporder;
 
 $klant = new Klant();
 $order = new Verkooporder();
+
+$melding = "";
 
 // =========================
 // VERKOOPORDER TOEVOEGEN
@@ -22,7 +25,19 @@ if(isset($_POST["insert_order"])){
         $_POST["status"]
     );
 
-    echo "<p>Order toegevoegd!</p>";
+    $melding = "Order succesvol toegevoegd!";
+}
+
+// =========================
+// MELDING NA UPDATE/DELETE
+// =========================
+if(isset($_GET['msg'])){
+    if($_GET['msg'] == 'updated'){
+        $melding = "Order bijgewerkt!";
+    }
+    if($_GET['msg'] == 'deleted'){
+        $melding = "Order verwijderd!";
+    }
 }
 
 // =========================
@@ -71,6 +86,13 @@ $klant->showTable($result);
 <h1>CRUD Verkooporder</h1>
 
 <h2>Nieuwe Verkooporder</h2>
+
+<?php
+// melding tonen
+if($melding != ""){
+    echo "<p style='color:green;'>$melding</p>";
+}
+?>
 
 <form method="post">
 
